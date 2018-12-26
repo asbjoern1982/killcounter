@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!--
+
+	heavily modified for use on veganerpartiet.dk
+	___________________________________________________________
+
+	                   killcounter-code.html
+	      XGB Web and Software Design ~ www.xgbdesign.com
+
+	  N.B.: This code was substantially modified in July 2011.
+	___________________________________________________________
+	-->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="ADAPTT" content="Animals Deserve Absolute Protection Today and Tomorrow" />
+	<meta name="keywords" content="ADAPTT, animal rights, veganism" />
+	<meta name="description" content="Modified ADAPTT Kill Counter, which is a modification of code produced by Action for Animals and SFVegan." />
+
+	<title>VP: Kill Counter</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- Add JavaScript variables and functions for the ADAPTT Kill Counter: -->
+	<script type="text/javascript">
+		// data, list of animals that is counted,
+		// "id" should be unique
+		// "killed" is how many animals is killed a year
+		// "text" is the following text
+    let animals = [
+      {
+        id: 'grise',
+        killed: 17261064,
+				text: 'grise slagtet (se specifikation nedenfor)'
+      },
+      {
+        id: 'kreaturer',
+        killed: 471800,
+				text: 'kreaturer slagtet'
+      },
+      {
+        id: 'kyllingerslagt',
+        killed: 101500000,
+				text: 'kyllinger slagtet'
+      },
+      {
+        id: 'hanekyllinger',
+        killed: 35000000,
+				text: 'hanekyllinger dræbt som biprodukt i ægindustrien'
+      },
+      {
+        id: 'mink',
+        killed: 15520516,
+				text: 'mink til pelsindustri'
+      },
+      {
+        id: 'kalveexport',
+        killed: 39800,
+				text: 'kalve og køer eksporteret'
+      },
+      {
+        id: 'smågriseexport',
+        killed: 13804309,
+				text: 'smågrise eksporteret'
+      },
+      {
+        id: 'pattegrisestald',
+        killed: 8760000,
+				text: 'pattegrisdødelighed i staldene'
+      },
+      {
+        id: 'jerseykalveskudt',
+        killed: 23497,
+				text: 'jerseykalve skudt'
+      },
+      {
+        id: 'fiskfanget',
+        killed: 910000000,
+				text: 'Kg. (forskellig) fisk fanget'
+      },
+      {
+        id: 'jagt',
+        killed: 2600000,
+				text: 'dyr skydes på jagt'
+      },
+      {
+        id: 'griseringsted',
+        killed: 1820000,
+				text: 'grise slagtet på Danish Crown Ringsted'
+      },
+      {
+        id: 'griseherning',
+        killed: 1612000,
+				text: 'grise slagtet på Danish Crown Herning'
+      },
+      {
+        id: 'grisehorsens',
+        killed: 5200000,
+				text: 'grise slagtet på Danish Crown Horsens'
+      },
+      {
+        id: 'griseblans',
+        killed: 3224000,
+				text: 'grise slagtet på Danish Crown Blans'
+      },
+      {
+        id: 'griseroenne',
+        killed: 442000,
+				text: 'grise slagtet på Danish Crown Rønne'
+      },
+      {
+        id: 'soeerskærbaek',
+        killed: 322400,
+				text: 'søer slagtet på Danish Crown Skærbæk'
+      },
+      {
+        id: 'grisesaeby',
+        killed: 2496000,
+				text: 'grise slagtet på Danish Crown Sæby'
+      }
+    ]
+
+		// datetime the counter should start from,
+		// default is now: "new Date()"
+		// alternative a fixed date: "new Date('2018-12-24T22:00:00')"
+		const startTime = new Date()
+
+		// number of times a second the timer should update the number, lower on larger lists
+		const timesPerSecond = 10
+
+		// tick
+		let tick = () => {
+			let ticks = timesPerSecond * (new Date().getTime() - startTime.getTime()) / 1000
+			animals.forEach(animal =>	{
+				let sum = Math.floor(animal.increment * ticks)
+				$('#' + animal.id).html(sum.toLocaleString('da'))
+			})
+		}
+
+		$(() => {
+			// setup data and list
+			animals.forEach(animal => {
+				animal.increment = animal.killed / 365 / 24 / 60 / 60 / timesPerSecond
+				$('#content').append('<span id="' + animal.id + '">0</span> ' + animal.text + '<br>')
+			})
+			// setup "start time" in header
+			$('#time').html(startTime.toLocaleString('da'))
+
+			// start timer
+			setInterval(tick, 1000 / timesPerSecond)
+		})
+  </script>
+  </head>
+
+  <body>
+  <h4>Antal døde dyr i Danmark siden <span id="time"></h4>
+  <div id="content"></div>
+  <p>Her er grunden til at vi kæmper denne kamp<br>
+	<a href="https://mailchi.mp/vgpt/vp">giv din vælgererklæring til veganerpartiet</a></p>
+  </body>
+</html>
