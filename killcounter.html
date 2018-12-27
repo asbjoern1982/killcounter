@@ -122,16 +122,13 @@ created for https://vgpt.dk/
 
 			// tick
 			let tick = () => {
-				animals.forEach(animal =>	{
-					let killedSinceStartTime = animal.increment * timesPerSecond * (new Date().getTime() - startTime.getTime()) / 1000
-					$('#' + animal.id).html(Math.floor(killedSinceStartTime).toLocaleString('da'))
-				})
+				animals.forEach(animal =>	$('#' + animal.id).html(parseInt(animal.increment * (new Date().getTime() - startTime.getTime())).toLocaleString('da')))
 			}
 
 			$(() => {
 				// setup data and list
 				animals.forEach(animal => {
-					animal.increment = animal.killed / 365 / 24 / 60 / 60 / timesPerSecond
+					animal.increment = animal.killed / 365 / 24 / 60 / 60 / 1000 // killed per milisecond
 					$('#content').append('<span id="' + animal.id + '">0</span> ' + animal.text + '<br>')
 				})
 				// setup "start time" in header
