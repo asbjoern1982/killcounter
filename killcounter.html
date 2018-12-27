@@ -117,12 +117,13 @@ created for https://vgpt.dk/
 			// alternative a fixed date: "new Date('2018-12-24T22:00:00')"
 			const startTime = new Date()
 
-			// number of times a second the timer should update the number, lower on larger lists
+			// number of times a second the timer should update the number
 			const timesPerSecond = 8
 
 			// tick
 			let tick = () => {
-				animals.forEach(animal =>	$('#' + animal.id).html(parseInt(animal.increment * (new Date().getTime() - startTime.getTime())).toLocaleString('da')))
+				let killedSinceStartTime = animal.increment * (new Date().getTime() - startTime.getTime())
+				animals.forEach(animal =>	$('#' + animal.id).html(parseInt(killedSinceStartTime)).toLocaleString('da'))
 			}
 
 			$(() => {
@@ -131,7 +132,7 @@ created for https://vgpt.dk/
 					animal.increment = animal.killed / 365 / 24 / 60 / 60 / 1000 // killed per milisecond
 					$('#content').append('<span id="' + animal.id + '">0</span> ' + animal.text + '<br>')
 				})
-				// setup "start time" in header
+				// set "start time" in the headline
 				$('#time').html(startTime.toLocaleString('da'))
 
 				// start timer
