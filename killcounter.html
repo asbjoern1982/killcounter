@@ -151,6 +151,7 @@ created for https://vgpt.dk/
 				})
 
 				// add the source list
+				if (sourceList.length) $('#sourceHeader').html('<h4>Kilder:</h4>')
 				for (let i = 0; i < sourceList.length; i++) {
 					let source = isValidURL(sourceList[i]) ? '<a href="' + sourceList[i] + '">' + sourceList[i] + '</a>' : sourceList[i]
 					$('#sources').append('[' + (i + 1) + '] ' + source + '<br>')
@@ -167,7 +168,7 @@ created for https://vgpt.dk/
   <body>
 	  <h4>Antal døde dyr i Danmark siden <span id="time"></h4>
 	  <div id="content"></div>
-		<h4>Kilder:</h4>
+		<div id="sourceHeader"></div>
 		<div id="sources"></div>
 
 		<p>
