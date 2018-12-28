@@ -122,8 +122,10 @@ created for https://vgpt.dk/
 
 			// tick
 			let tick = () => {
-				let killedSinceStartTime = animal.increment * (new Date().getTime() - startTime.getTime())
-				animals.forEach(animal =>	$('#' + animal.id).html(parseInt(killedSinceStartTime)).toLocaleString('da'))
+				animals.forEach(animal =>	{
+					let killedSinceStartTime = animal.increment * (new Date().getTime() - startTime.getTime())
+					$('#' + animal.id).html(parseInt(killedSinceStartTime)).toLocaleString('da')
+				})
 			}
 
 			$(() => {
