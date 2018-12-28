@@ -23,17 +23,18 @@ created for https://vgpt.dk/
 	      {
 	        id: 'grise',
 	        killed: 17261064,
-					text: 'grise slagtet (se specifikation nedenfor)'
+					text: 'grise slagtet i Danmark',
+					source: 'https://www.dr.dk/nyheder/indland/laveste-antal-i-25-aar-svineslagtninger-paa-dansk-jord-fortsaetter-nedtur'
 	      },
 	      {
 	        id: 'kreaturer',
 	        killed: 471800,
-					text: 'kreaturer slagtet'
+					text: 'kreaturer slagtet i Danmark'
 	      },
 	      {
 	        id: 'kyllingerslagt',
 	        killed: 101500000,
-					text: 'kyllinger slagtet'
+					text: 'kyllinger slagtet i Danmark'
 	      },
 	      {
 	        id: 'hanekyllinger',
@@ -43,7 +44,7 @@ created for https://vgpt.dk/
 	      {
 	        id: 'mink',
 	        killed: 15520516,
-					text: 'mink til pelsindustri'
+					text: 'mink aflivet til pelsindustri'
 	      },
 	      {
 	        id: 'kalveexport',
@@ -58,7 +59,7 @@ created for https://vgpt.dk/
 	      {
 	        id: 'pattegrisestald',
 	        killed: 8760000,
-					text: 'pattegrisdødelighed i staldene'
+					text: 'pattegrisdødelighed i de danske staldene'
 	      },
 	      {
 	        id: 'jerseykalveskudt',
@@ -128,12 +129,32 @@ created for https://vgpt.dk/
 				})
 			}
 
+			let isValidURL = (str) => {
+			  let a = document.createElement('a')
+			  a.href = str
+			  return (a.host && a.host !== window.location.host)
+			}
+
 			$(() => {
+				// source list
+				let sourceList = []
+
 				// setup data and list
 				animals.forEach(animal => {
 					animal.increment = animal.killed / 365 / 24 / 60 / 60 / 1000 // killed per milisecond
-					$('#content').append('<span id="' + animal.id + '">0</span> ' + animal.text + '<br>')
+					let source = ''
+					if (animal.source) {
+						sourceList.push(animal.source)
+						source = ' [' + sourceList.length + ']'
+					}
+					$('#content').append('<span id="' + animal.id + '">0</span> ' + animal.text + source + '<br>')
 				})
+
+				// add the source list
+				for (let i = 0; i < sourceList.length; i++) {
+					let source = isValidURL(sourceList[i]) ? '<a href="' + sourceList[i] + '">' + sourceList[i] + '</a>' : sourceList[i]
+					$('#sources').append('[' + (i + 1) + '] ' + source + '<br>')
+				}
 				// set "start time" in the headline
 				$('#time').html(startTime.toLocaleString('da'))
 
@@ -146,9 +167,11 @@ created for https://vgpt.dk/
   <body>
 	  <h4>Antal døde dyr i Danmark siden <span id="time"></h4>
 	  <div id="content"></div>
-	  <p>
-			Her er grunden til at vi kæmper denne kamp<br>
-			<a href="https://mailchi.mp/vgpt/vp">giv din vælgererklæring til veganerpartiet</a>
+		<h4>Kilder:</h4>
+		<div id="sources"></div>
+
+		<p>
+			<a href="https://mailchi.mp/vgpt/vp">giv din vælgererklæring</a>
 		</p>
   </body>
 </html>
